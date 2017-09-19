@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .carousel {
+      position: relative;
+      width: 780px;
+      height: 330px;
+      margin: 100px auto;
+      border: 1px solid #333;
+      overflow: hidden;
+    }
+    .carousel .m_unit {
+      width: 5000px;
+      height: 330px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .carousel ul {
+      list-style: none;
+    }
+    .carousel ul li {
+      float: left;
+      width: 780px;
+      height: 330px;
+    }
+
+    .btns a {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      top: 50%;
+      margin-top: -20px;
+      background-color: orange;
+      font-size: 30px;
+      line-height: 40px;
+      text-align: center;
+      border-radius: 50%;
+      font-weight: bold;
+      z-index: 999;
+    }
+    .btns a:hover {
+      background-color: gold;
+    }
+    .leftBtn {
+      left: 10px;
+    }
+    .rightBtn {
+      right: 10px;
+    }
+    .circles {
+      position: absolute;
+      width: 150px;
+      height: 16px;
+      bottom: 10px;
+      left: 50%;
+      margin-left: -75px;
+    }
+    .circles ol {
+      list-style: none;
+    }
+    .circles ol li {
+      float: left;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      background-color: orange;
+      margin-right: 6px;
+    }
+    .circles ol li.current {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="carousel" class="carousel">
+    <div id="m_unit" class="m_unit">
+      <ul>
+        <li><a href=""><img src="img/0.jpg" alt=""></a></li>
+        <li><a href=""><img src="img/1.jpg" alt=""></a></li>
+        <li><a href=""><img src="img/2.jpg" alt=""></a></li>
+        <li><a href=""><img src="img/3.jpg" alt=""></a></li>
+        <li><a href=""><img src="img/4.jpg" alt=""></a></li>
+      </ul>
+    </div>
+    <div class="btns">
+      <a href="javascript:" class="leftBtn" id="leftBtn"></a>
+      <a href="javascript:" class="rightBtn" id="rightBtn"></a>
+    </div>
+    <div class="circles" id="circles">
+      <ol>
+        <li class="current"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ol>
+    </div>
+  </div>
+
+  <script src="jquery-3.2.1.min.js" charset="utf-8"></script>
+  <script>
+    $('.m_unit ul li:first').clone().appendTo('.m_unit ul');
+    //$('.m_unit ul li:eq(4)').clone().prependTo('.m_unit ul');
+    var index = 0;
+    $('#rightBtn').click(function(){
+    	index++;
+    	$('.m_unit').stop(true,true).animate({'left':-780 * index}, 600, function(){
+    		if (index > 4) {
+    			index = 0;
+    			$(this).css("left", 0);
+    		}
+    	});
+    	changeCircles();
+    });
+    
+    
+    
+    $('#leftBtn').click(function(){
+    	index--;
+    	if (index < 0) {
+    			index = 4;
+    			$(this).css("left", -780 * index);
+    		}
+    	$('.m_unit').stop(true,true).animate({'left':-780 * index}, 600, function(){
+    		
+    	});
+    	
+    	changeCircles();
+    });
+  
+    
+    $('#circles ol li').click(function(){
+    	console.log($(this).index);
+    	index = $(this).index()-1;
+    	if($('#m_unit').is(':animated')) return;
+      index++;
+      changeCircles();
+      $('#m_unit').animate({'left':-780 * index},600,function() {
+        if(index === 5) {
+          index = 0;
+          $(this).css('left',0);
+        }
+      })
+    })
+
+
+    
+    
+    
+    function changeCircles(){
+    	var idx = index;
+    	if (index === 5){
+    		idx = 0;
+    	}
+    	$('#circles ol li').eq(idx).addClass('current').siblings().removeClass('current');
+    }
+    //addClass() 方法向被选元素添加一个或多个类   该方法不会移除已存在的 class 属性,仅仅添加一个或多个 class 属性
+    //removeClass() 方法从被选元素移除一个或多个类。 注释:如果没有规定参数,则该方法将从被选元素中删除所有类。
+    //查找每个 p 元素的所有类名为 "selected" 的所有同胞元素  $("p").siblings(".selected")
+    //定义和用法 	siblings() 获得匹配集合中每个元素的同胞，通过选择器进行筛选是可选的。
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!--
+console.log([
+             "                   _ooOoo_",
+             "                  o8888888o",
+             "                  88\" . \"88",
+             "                  (| -_- |)",
+             "                  O\\  =  /O",
+             "               ____/`---'\\____",
+             "             .'  \\\\|     |//  `.",
+             "            /  \\\\|||  :  |||//  \\",
+             "           /  _||||| -:- |||||-  \\",
+             "           |   | \\\\\\  -  /// |   |",
+             "           | \\_|  ''\\---/''  |   |",
+             "           \\  .-\\__  `-`  ___/-. /",
+             "         ___`. .'  /--.--\\  `. . __",
+             "      .\"\" '<  `.___\\_<|>_/___.'  >'\"\".",
+             "     | | :  `- \\`.;`\\ _ /`;.`/ - ` : | |",
+             "     \\  \\ `-.   \\_ __\\ /__ _/   .-` /  /",
+             "======`-.____`-.___\\_____/___.-`____.-'======",
+             "                   `=---='",
+             "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+             "         佛祖保佑       永无BUG"
+         ].join('\n'));-->
